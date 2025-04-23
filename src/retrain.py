@@ -61,8 +61,8 @@ print(f"✅ Model retrained. Accuracy: {accuracy * 100:.2f}%")
 
 # ✅ Guardar modelo
 joblib.dump(model, "model/modelo_depresion.pkl")
-print("💾 Model saved at model/modelo_depresion.pkl")
+print("Model saved at model/modelo_depresion.pkl")
 
 # Mostrar las columnas utilizadas
-print("🧪 Columnas usadas para entrenar el modelo:")
+print("Columnas usadas para entrenar el modelo:")
 print(X.columns.tolist())
