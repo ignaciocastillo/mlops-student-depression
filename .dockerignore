@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+*.ipynb
+*.csv
+.idea/
+*.pkl
+.DS_Store
+.git/
+*.log
+notebooks/
