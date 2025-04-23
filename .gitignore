@@ -30,7 +30,6 @@ __pycache__/
 *.h5
 *.pt
 *.joblib
-*.csv
 *.xlsx
 
 # Modelos y datos
