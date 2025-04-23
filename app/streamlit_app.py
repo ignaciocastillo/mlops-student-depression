@@ -52,7 +52,3 @@ if st.button("Predict"):
         st.error("Prediction: Student is likely **depressed**")
     else:
         st.success("Prediction: Student is likely **not depressed**")
-
-# Mostrar accuracy del modelo
-st.markdown("---")
-st.markdown(f"**Model Accuracy after Retraining:** {accuracy * 100:.2f}%")
