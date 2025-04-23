@@ -49,6 +49,6 @@ if st.button("Predict"):
     prediction = model.predict(user_input)
 
     if prediction[0] == 1:
-        st.error("Prediction: Student is likely **depressed**")
+        st.error("Prediction: Student is likely **depressed** 😔")
     else:
-        st.success("Prediction: Student is likely **not depressed**")
+        st.success("Prediction: Student is likely **not depressed** 😎")
