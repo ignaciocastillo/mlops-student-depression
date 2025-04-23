@@ -36,9 +36,9 @@ __pycache__/
 docker-compose.override.yml
 
 # Archivos de control de DVC
+!.dvc/
 .dvc/
 .cache/
-*.dvc
 
 # Otros archivos grandes
 *.zip
@@ -46,3 +46,5 @@ docker-compose.override.yml
 
 # DeepSource
 .deepsource.toml
+
+
