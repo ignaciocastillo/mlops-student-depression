@@ -8,57 +8,61 @@ from sklearn.preprocessing import LabelEncoder
 print("🔄 Loading dataset...")
 df = pd.read_csv("data/student_depression.csv")
 
-# Limpieza de columna Sleep Duration
+# ❌ Eliminar columna 'Job Satisfaction' si existe
+if 'Job Satisfaction' in df.columns:
+    df = df.drop(columns=['Job Satisfaction'])
+
+# ✅ Convertir Sleep Duration
 def convert_sleep_duration(duration):
-    if isinstance(duration, str):
-        duration = duration.replace("'", "").replace("hours", "").strip()
-        if '-' in duration:
-            start, end = duration.split('-')
-            return (int(start) + int(end)) // 2
-        if 'Less than' in duration:
-            return 4
-        if 'More than' in duration:
-            return 9
+    if pd.isnull(duration):
+        return None
+    duration = str(duration).replace("'", "").replace("hours", "").strip()
+    if '-' in duration:
         try:
-            return int(float(duration))
-        except ValueError:
+            start, end = duration.split('-')
+            return (int(start) + int(end)) / 2
+        except:
             return None
-    return duration
+    if 'Less than' in duration:
+        return 4
+    if 'More than' in duration:
+        return 9
+    try:
+        return float(duration)
+    except:
+        return None
 
-df["Sleep Duration"] = df["Sleep Duration"].apply(convert_sleep_duration)
+df['Sleep Duration'] = df['Sleep Duration'].apply(convert_sleep_duration)
 
-# Eliminar filas con valores nulos
-df.dropna(inplace=True)
+# ❌ Eliminar columnas irrelevantes
+drop_cols = ['id', 'City', 'Profession', 'Degree']
+df = df.drop(columns=[col for col in drop_cols if col in df.columns])
 
-# Codificación de columnas categóricas
+# ✅ Codificación de variables categóricas
 label_encoder = LabelEncoder()
-df["Gender"] = label_encoder.fit_transform(df["Gender"])
-df["Dietary Habits"] = label_encoder.fit_transform(df["Dietary Habits"])
-df["Have you ever had suicidal thoughts ?"] = label_encoder.fit_transform(df["Have you ever had suicidal thoughts ?"])
-df["Financial Stress"] = label_encoder.fit_transform(df["Financial Stress"])
-df["Family History of Mental Illness"] = label_encoder.fit_transform(df["Family History of Mental Illness"])
+categorical_cols = ['Gender', 'Dietary Habits', 'Have you ever had suicidal thoughts ?', 'Financial Stress', 'Family History of Mental Illness']
+for col in categorical_cols:
+    df[col] = label_encoder.fit_transform(df[col])
 
-# Eliminar columnas irrelevantes o no numéricas
-columns_to_drop = ["id", "City", "Degree", "Profession"]
-for col in columns_to_drop:
-    if col in df.columns:
-        df.drop(columns=col, inplace=True)
+# ✅ Separar features y target
+X = df.drop(columns=['Depression'])
+y = df['Depression']
 
-
-# Features y label
-X = df.drop("Depression", axis=1)
-y = df["Depression"]
-
-# División y entrenamiento
+# ✅ División de datos
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# ✅ Entrenamiento
 model = RandomForestClassifier()
 model.fit(X_train, y_train)
 
-# Evaluación
-y_pred = model.predict(X_test)
-accuracy = accuracy_score(y_test, y_pred)
+# ✅ Evaluación
+accuracy = accuracy_score(y_test, model.predict(X_test))
 print(f"✅ Model retrained. Accuracy: {accuracy * 100:.2f}%")
 
-# Guardar modelo
+# ✅ Guardar modelo
 joblib.dump(model, "model/modelo_depresion.pkl")
 print("💾 Model saved at model/modelo_depresion.pkl")
+
+# Mostrar las columnas utilizadas
+print("🧪 Columnas usadas para entrenar el modelo:")
+print(X.columns.tolist())
