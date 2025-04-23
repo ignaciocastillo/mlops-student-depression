@@ -72,7 +72,7 @@ print("💾 Model saved at model/modelo_depresion.pkl")
 print("🧪 Columnas usadas para entrenar el modelo:")
 print(list(X.columns))
 
-# Guardar la precisión en un archivo de texto o JSON
-with open("model/accuracy.txt", "w") as f:
-    f.write(f"{accuracy}")
+with open("accuracy.txt", "w") as f:
+    f.write(f"{accuracy * 100:.2f}")
+print(f"✅ Model retrained. Accuracy: {accuracy * 100:.2f}%")
 

@@ -56,11 +56,12 @@ if st.button("🔍 Predict"):
         st.success("Prediction: Student is likely **not depressed** 🤙")
 
 
-# Mostrar precisión del modelo al final de la app
-try:
-    with open("model/accuracy.txt", "r") as f:
-        last_accuracy = float(f.read())
-    st.markdown("---")
-    st.markdown(f"**Model accuracy (last retrain):** {last_accuracy * 100:.2f}%")
-except Exception as e:
-    st.warning("Model accuracy info not available.")
+import os
+
+st.markdown("---")
+if os.path.exists("accuracy.txt"):
+    with open("accuracy.txt", "r") as f:
+        acc = f.read()
+    st.markdown(f"**Model Accuracy after Retraining:** {acc}%")
+else:
+    st.markdown("*Model accuracy info not available.*")
