@@ -1,13 +1,14 @@
 import streamlit as st
 import joblib
 import numpy as np
-import pandas as pd
 
-# Load the trained model
-model = joblib.load("model/modelo_depresion.pkl")
+# Load the trained model and accuracy from the pickle file
+model_data = joblib.load("model/modelo_depresion.pkl")
+model = model_data["model"]
+accuracy = model_data["accuracy"]
 
 st.set_page_config(page_title="Student Depression Predictor", layout="centered")
-st.title("🧠 Student Depression Predictor")
+st.title("Student Depression Predictor")
 
 st.markdown("Fill out the form below to get a prediction.")
 
@@ -24,7 +25,6 @@ dietary_habits = st.selectbox("Dietary Habits", ["Healthy", "Moderate", "Unhealt
 suicidal_thoughts = st.selectbox("Have you had suicidal thoughts?", ["No", "Yes"])
 financial_stress = st.selectbox("Financial Stress (1-5)", ["1", "2", "3", "4", "5"])
 family_history = st.selectbox("Family History of Mental Illness", ["No", "Yes"])
-
 
 # === Encode inputs ===
 def encode_inputs():
@@ -44,24 +44,16 @@ def encode_inputs():
     ]
     return np.array([data])
 
-
 # === Prediction ===
-if st.button("🔍 Predict"):
+if st.button("Predict"):
     user_input = encode_inputs()
     prediction = model.predict(user_input)
 
     if prediction[0] == 1:
-        st.error("Prediction: Student is likely **depressed** 😔")
+        st.error("Prediction: Student is likely **depressed**")
     else:
-        st.success("Prediction: Student is likely **not depressed** 🤙")
+        st.success("Prediction: Student is likely **not depressed**")
 
-
-import os
-
+# === Model accuracy display ===
 st.markdown("---")
-if os.path.exists("accuracy.txt"):
-    with open("accuracy.txt", "r") as f:
-        acc = f.read()
-    st.markdown(f"**Model Accuracy after Retraining:** {acc}%")
-else:
-    st.markdown("*Model accuracy info not available.*")
+st.markdown(f"**Model Accuracy after Retraining:** {accuracy * 100:.2f}%")
