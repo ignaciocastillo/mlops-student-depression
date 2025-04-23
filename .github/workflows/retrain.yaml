@@ -23,11 +23,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install dvc
 
-      - name: Pull dataset from DVC
-        run: |
-          dvc pull data/student_depression.csv.dvc --force
+      # Ya NO se usa DVC
+      # - name: Pull dataset from DVC
+      #   run: dvc pull data/student_depression.csv.dvc
 
       - name: Run retrain script
         run: python src/retrain.py
