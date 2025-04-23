@@ -27,7 +27,7 @@ jobs:
 
       - name: Pull dataset from DVC
         run: |
-          dvc pull data/student_depression.csv.dvc
+          dvc pull data/student_depression.csv.dvc --force
 
       - name: Run retrain script
         run: python src/retrain.py
