@@ -53,4 +53,4 @@ if st.button("🔍 Predict"):
     if prediction[0] == 1:
         st.error("Prediction: Student is likely **depressed** 😔")
     else:
-        st.success("Prediction: Student is likely **not depressed** 🙂")
+        st.success("Prediction: Student is likely **not depressed** 🤙")
