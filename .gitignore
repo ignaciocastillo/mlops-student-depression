@@ -22,7 +22,7 @@ __pycache__/
 .env.*
 
 # VSCode y otros IDEs
-.vscode/
+.vscode/ss
 .idea/
 
 # Archivos de datasets y modelos pesados
@@ -30,20 +30,15 @@ __pycache__/
 *.h5
 *.pt
 *.joblib
-*.csv
 *.xlsx
-
-# Modelos y datos
-model/
-data/
 
 # Archivos de Docker
 docker-compose.override.yml
 
 # Archivos de control de DVC
+!.dvc/
 .dvc/
 .cache/
-*.dvc
 
 # Otros archivos grandes
 *.zip
@@ -51,3 +46,5 @@ docker-compose.override.yml
 
 # DeepSource
 .deepsource.toml
+
+
