@@ -1,0 +1,7 @@
+[core]
+    remote = azureremote
+    autostage = true
+
+[remote "azureremote"]
+    url = azure://dvcstorageignacio.blob.core.windows.net/dvc
+    # connection_string eliminado

@@ -26,7 +26,6 @@ __pycache__/
 .idea/
 
 # Archivos de datasets y modelos pesados
-*.pkl
 *.h5
 *.pt
 *.joblib
@@ -48,3 +47,7 @@ docker-compose.override.yml
 .deepsource.toml
 
 
+/model.pkl
+
+
+.dvc/config
